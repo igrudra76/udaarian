@@ -428,63 +428,46 @@ body{
 .song-subtitle{
     margin-top:6px;
     color:rgba(220,240,245,.65);
-    font-size:15px;
+    font-size:13px;
 }
 
 /* =========================
-   PLAYER
+   COMPACT PLAYER
 ========================= */
 
 .player{
-    width:min(700px,92vw);
-    margin-top:18px;
+    width:min(560px,88vw);
+    margin-top:12px;
 
-    padding:18px;
+    padding:7px;
 
-    border:1px solid rgba(180,235,255,.18);
-    border-radius:22px;
+    border:1px solid rgba(157,150,255,.28);
+    border-radius:18px;
 
-    background:rgba(255,255,255,.055);
-    backdrop-filter:blur(15px);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(24,30,68,.78),
+            rgba(8,22,38,.78)
+        );
+
+    backdrop-filter:blur(18px);
 
     box-shadow:
-        0 0 35px rgba(50,190,255,.08);
-}
-
-.upload{
-    display:flex;
-    justify-content:center;
-    margin-bottom:12px;
-}
-
-.upload label{
-    display:inline-block;
-
-    padding:9px 16px;
-    border-radius:20px;
-
-    border:1px solid rgba(180,235,255,.25);
-    background:rgba(255,255,255,.06);
-
-    color:rgba(235,250,255,.85);
-    font-size:12px;
-    cursor:pointer;
-
-    transition:.25s;
-}
-
-.upload label:hover{
-    background:rgba(120,210,255,.14);
-}
-
-#songFile{
-    display:none;
+        0 0 35px rgba(92,120,255,.12),
+        inset 0 1px 0 rgba(255,255,255,.06);
 }
 
 audio{
     width:100%;
-    height:42px;
+    height:30px;
+
+    color-scheme:dark;
+    accent-color:#9b8cff;
+
+    border-radius:10px;
 }
+
 /* =========================
    PLAYER CONTROLS
 ========================= */
@@ -493,20 +476,20 @@ audio{
     display:flex;
     justify-content:center;
     align-items:center;
-    gap:12px;
 
-    margin-top:13px;
+    gap:8px;
+    margin-top:5px;
 }
 
 .control-btn{
-    width:42px;
-    height:42px;
+    width:30px;
+    height:30px;
 
     border-radius:50%;
 
-    border:1px solid rgba(180,235,255,.22);
+    border:1px solid rgba(170,160,255,.25);
 
-    background:rgba(255,255,255,.07);
+    background:rgba(95,90,170,.13);
 
     color:white;
 
@@ -525,20 +508,69 @@ audio{
 }
 
 .play-btn{
-    width:52px;
-    height:52px;
-    font-size:17px;
+    width:42px;
+    height:42px;
+
+    font-size:14px;
 }
 
 .status{
-    margin-top:8px;
+    min-height:14px;
 
-    min-height:18px;
+    margin-top:4px;
 
-    color:rgba(220,245,255,.5);
+    color:rgba(220,215,255,.62);
 
-    font-size:11px;
+    font-size:10px;
     letter-spacing:1px;
+}
+
+/* =========================
+   HEART NOTE
+========================= */
+
+.heart-note{
+    width:min(760px,90vw);
+
+    margin-top:22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:18px;
+
+    color:rgba(245,242,255,.86);
+
+    text-align:center;
+}
+
+.heart-note p{
+    margin:0;
+
+    font-family:Georgia,"Times New Roman",serif;
+
+    font-size:clamp(13px,1.5vw,16px);
+
+    line-height:1.4;
+    letter-spacing:.6px;
+
+    text-shadow:
+        0 0 12px rgba(180,165,255,.28),
+        0 0 30px rgba(90,120,255,.18);
+}
+
+.heart-note-line{
+    width:50px;
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(180,170,255,.55),
+            transparent
+        );
 }
 
 /* =========================
@@ -590,6 +622,19 @@ audio{
 
 @media(max-width:600px){
 
+    .heart-note{
+        gap:10px;
+        margin-top:20px;
+    }
+
+    .heart-note-line{
+        width:35px;
+    }
+
+    .heart-note p{
+        font-size:13px;
+    }
+
     .flower.one{
         left:5%;
     }
@@ -622,9 +667,14 @@ audio{
 <div class="scene">
 
     <!-- PARTICLES -->
-    <div class="particles" id="particles"></div>
+    <div
+        class="particles"
+        id="particles">
+    </div>
+
 
     <!-- FLOWERS -->
+
     <div class="flowers">
 
         <div class="flower one">
@@ -665,7 +715,9 @@ audio{
 
     </div>
 
+
     <!-- WATER -->
+
     <div class="water">
         <div class="ripple"></div>
         <div class="ripple"></div>
@@ -673,9 +725,7 @@ audio{
     </div>
 
 
-    <!-- =========================
-         PAGE 1
-    ========================= -->
+    <!-- PAGE 1 -->
 
     <section
         class="page opening active"
@@ -696,9 +746,7 @@ audio{
     </section>
 
 
-    <!-- =========================
-         PAGE 2
-    ========================= -->
+    <!-- PAGE 2 -->
 
     <section
         class="page"
@@ -731,9 +779,7 @@ audio{
     </section>
 
 
-    <!-- =========================
-         PAGE 3
-    ========================= -->
+    <!-- PAGE 3 -->
 
     <section
         class="page song-page"
@@ -752,12 +798,21 @@ audio{
         </div>
 
 
-        <!-- PLAYER -->
+        <!-- COMPACT PLAYER -->
 
         <div class="player">
-            <audio id="audio" controls preload="metadata">
-                <source src="UDAARIAN_compressed.wav" type="audio/wav">
+
+            <audio
+                id="audio"
+                controls
+                preload="metadata">
+
+                <source
+                    src="UDAARIAN_compressed.wav"
+                    type="audio/wav">
+
                 Your browser does not support audio playback.
+
             </audio>
 
 
@@ -767,21 +822,29 @@ audio{
                     class="control-btn"
                     id="backBtn"
                     type="button">
+
                     ↶
+
                 </button>
+
 
                 <button
                     class="control-btn play-btn"
                     id="playBtn"
                     type="button">
+
                     ▶
+
                 </button>
+
 
                 <button
                     class="control-btn"
                     id="forwardBtn"
                     type="button">
+
                     ↷
+
                 </button>
 
             </div>
@@ -790,35 +853,25 @@ audio{
             <div
                 class="status"
                 id="status">
+
                 Udaarian is ready ✦ Press play.
+
             </div>
 
         </div>
 
 
-        <!-- =========================
-             LYRICS
-        ========================= -->
+        <!-- HEART NOTE -->
 
-        <div
-            class="lyrics"
-            id="lyrics">
+        <div class="heart-note">
 
-            <!--
-            KEEP YOUR EXISTING UD AARIAN LYRICS HERE.
+            <span class="heart-note-line"></span>
 
-            IMPORTANT:
-            Add data-time="SECONDS" to each lyric <p>
-            if you want automatic highlighting.
+            <p>
+                Your heart is literally as beautiful as the moon. ✦
+            </p>
 
-            Example:
-
-            <p data-time="0">YOUR EXISTING LINE</p>
-            <p data-time="8">YOUR EXISTING LINE</p>
-            <p data-time="15">YOUR EXISTING LINE</p>
-
-            Do NOT change your lyrics themselves.
-            -->
+            <span class="heart-note-line"></span>
 
         </div>
 
@@ -969,19 +1022,9 @@ const status =
 
 /* PLAY / PAUSE */
 
-
 playBtn.addEventListener(
     "click",
     function(){
-
-        if(!audio.src){
-
-            status.textContent =
-                "Choose the song first.";
-
-            return;
-        }
-
 
         if(audio.paused){
 
@@ -1003,6 +1046,9 @@ audio.addEventListener(
 
         playBtn.textContent = "Ⅱ";
 
+        status.textContent =
+            "Playing Udaarian ✦";
+
     }
 );
 
@@ -1012,6 +1058,9 @@ audio.addEventListener(
     function(){
 
         playBtn.textContent = "▶";
+
+        status.textContent =
+            "Udaarian is ready ✦ Press play.";
 
     }
 );
@@ -1048,6 +1097,7 @@ forwardBtn.addEventListener(
     }
 );
 
+
 /* =========================
    KEYBOARD
 ========================= */
@@ -1062,10 +1112,8 @@ document.addEventListener(
         ){
 
             if(
-                document.activeElement.tagName !==
-                "BUTTON" &&
-                document.activeElement.tagName !==
-                "INPUT"
+                document.activeElement.tagName !== "BUTTON" &&
+                document.activeElement.tagName !== "INPUT"
             ){
 
                 event.preventDefault();
@@ -1089,7 +1137,9 @@ document.addEventListener(
 );
 
 
-/* START */
+/* =========================
+   START
+========================= */
 
 showPage(0);
 
