@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You — Made by Rudra</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+}
+
+body{
+    overflow:hidden;
+    font-family:Georgia,"Times New Roman",serif;
+    background:#02070a;
+    color:white;
+}
+
+/* =========================
+   MAIN SCENE
+========================= */
+
+.scene{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+
+    background:
+        radial-gradient(circle at 50% 35%,rgba(70,150,180,.18),transparent 35%),
+        radial-gradient(circle at 20% 80%,rgba(30,100,120,.12),transparent 35%),
+        linear-gradient(135deg,#010405,#061116,#020607);
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+.particles{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+}
+
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#dffaff;
+
+    box-shadow:
+        0 0 8px #a9eaff,
+        0 0 16px rgba(90,210,255,.5);
+
+    opacity:.5;
+    animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+    from{
+        transform:translateY(110vh);
+    }
+
+    to{
+        transform:translateY(-10vh);
+    }
+}
+
+/* =========================
+   FLOWERS
+========================= */
+
+.flowers{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+}
+
+.flower{
+    position:absolute;
+    width:80px;
+    height:80px;
+    opacity:.75;
+
+    animation:flowerFloat 5s ease-in-out infinite;
+}
+
+.flower.one{
+    left:12%;
+    top:20%;
+}
+
+.flower.two{
+    right:13%;
+    top:25%;
+    transform:scale(.7);
+}
+
+.flower.three{
+    left:22%;
+    bottom:13%;
+    transform:scale(.55);
+}
+
+.flower.four{
+    right:22%;
+    bottom:16%;
+    transform:scale(.8);
+}
+
+@keyframes flowerFloat{
+    0%,100%{
+        transform:translateY(0) rotate(-3deg);
+    }
+
+    50%{
+        transform:translateY(-14px) rotate(3deg);
+    }
+}
+
+.petal{
+    position:absolute;
+    width:42px;
+    height:62px;
+
+    left:50%;
+    top:50%;
+
+    transform-origin:50% 85%;
+
+    border-radius:
+        70% 30% 65% 35% /
+        70% 45% 55% 30%;
+
+    background:
+        radial-gradient(
+            ellipse at 30% 20%,
+            #ffffff,
+            #8fe4ff 35%,
+            #247a9a 75%,
+            transparent
+        );
+
+    box-shadow:
+        0 0 10px rgba(150,235,255,.7),
+        0 0 25px rgba(60,190,255,.35);
+}
+
+.petal:nth-child(1){
+    transform:translate(-50%,-85%) rotate(0deg);
+}
+
+.petal:nth-child(2){
+    transform:translate(-50%,-85%) rotate(72deg);
+}
+
+.petal:nth-child(3){
+    transform:translate(-50%,-85%) rotate(144deg);
+}
+
+.petal:nth-child(4){
+    transform:translate(-50%,-85%) rotate(216deg);
+}
+
+.petal:nth-child(5){
+    transform:translate(-50%,-85%) rotate(288deg);
+}
+
+.flower-center{
+    position:absolute;
+    left:50%;
+    top:50%;
+
+    width:22px;
+    height:22px;
+
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+        0 0 15px white,
+        0 0 35px #68dfff,
+        0 0 60px rgba(60,190,255,.7);
+}
+
+/* =========================
+   WATER
+========================= */
+
+.water{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:27%;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(50,150,180,.12),
+            rgba(2,20,28,.45)
+        );
+
+    pointer-events:none;
+}
+
+.ripple{
+    position:absolute;
+    left:50%;
+    height:2px;
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            to right,
+            transparent,
+            rgba(180,240,255,.5),
+            transparent
+        );
+
+    animation:ripple 4s ease-in-out infinite;
+}
+
+.ripple:nth-child(1){
+    width:350px;
+    top:30%;
+}
+
+.ripple:nth-child(2){
+    width:230px;
+    top:55%;
+    animation-delay:1s;
+}
+
+.ripple:nth-child(3){
+    width:450px;
+    top:75%;
+    animation-delay:2s;
+}
+
+@keyframes ripple{
+    0%,100%{
+        transform:translateX(-50%) scaleX(.75);
+        opacity:.15;
+    }
+
+    50%{
+        transform:translateX(-50%) scaleX(1.1);
+        opacity:.7;
+    }
+}
+
+/* =========================
+   PAGES
+========================= */
+
+.page{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:30px;
+    text-align:center;
+
+    opacity:0;
+    visibility:hidden;
+
+    transform:scale(1.03);
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease,
+        visibility 1s;
+}
+
+.page.active{
+    opacity:1;
+    visibility:visible;
+    transform:scale(1);
+}
+
+/* =========================
+   PAGE 1
+========================= */
+
+.opening{
+    flex-direction:column;
+}
+
+.small-line{
+    color:rgba(220,245,255,.65);
+    font-size:13px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    margin-bottom:20px;
+}
+
+.made{
+    font-size:clamp(45px,8vw,90px);
+    font-weight:300;
+    color:white;
+
+    text-shadow:
+        0 0 10px white,
+        0 0 25px #8ee9ff,
+        0 0 60px rgba(70,200,255,.7);
+
+    animation:textGlow 3s ease-in-out infinite;
+}
+
+@keyframes textGlow{
+    0%,100%{
+        text-shadow:
+            0 0 10px white,
+            0 0 25px #8ee9ff;
+    }
+
+    50%{
+        text-shadow:
+            0 0 20px white,
+            0 0 45px #7ddfff,
+            0 0 80px rgba(70,200,255,.8);
+    }
+}
+
+.by{
+    margin-top:15px;
+    font-size:18px;
+    color:rgba(225,245,255,.7);
+    letter-spacing:3px;
+}
+
+/* =========================
+   PAGE 2
+========================= */
+
+.message{
+    max-width:650px;
+}
+
+.message h2{
+    font-size:clamp(35px,6vw,65px);
+    font-weight:300;
+    margin:0 0 30px;
+
+    text-shadow:
+        0 0 15px rgba(150,230,255,.6);
+}
+
+.message p{
+    font-size:clamp(18px,2.5vw,25px);
+    line-height:1.8;
+    color:rgba(235,248,252,.82);
+    margin:14px 0;
+    animation:messageAppear 1s ease both;
+}
+
+.message p:nth-child(2){
+    animation-delay:.4s;
+}
+
+.message p:nth-child(3){
+    animation-delay:.8s;
+}
+
+.message p:nth-child(4){
+    animation-delay:1.2s;
+}
+
+@keyframes messageAppear{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================
+   PAGE 3
+========================= */
+
+.song-page{
+    flex-direction:column;
+    justify-content:flex-start;
+
+    padding-top:55px;
+    padding-bottom:30px;
+
+    overflow:hidden;
+}
+
+.song-intro{
+    font-size:13px;
+    letter-spacing:4px;
+    color:rgba(220,245,255,.6);
+    margin-bottom:8px;
+}
+
+.song-title{
+    font-size:clamp(42px,7vw,75px);
+    font-weight:300;
+    margin:0;
+
+    text-shadow:
+        0 0 10px white,
+        0 0 30px #7de4ff,
+        0 0 70px rgba(50,190,255,.65);
+}
+
+.song-subtitle{
+    margin-top:6px;
+    color:rgba(220,240,245,.65);
+    font-size:15px;
+}
+
+/* =========================
+   PLAYER
+========================= */
+
+.player{
+    width:min(700px,92vw);
+    margin-top:18px;
+
+    padding:18px;
+
+    border:1px solid rgba(180,235,255,.18);
+    border-radius:22px;
+
+    background:rgba(255,255,255,.055);
+    backdrop-filter:blur(15px);
+
+    box-shadow:
+        0 0 35px rgba(50,190,255,.08);
+}
+
+.upload{
+    display:flex;
+    justify-content:center;
+    margin-bottom:12px;
+}
+
+.upload label{
+    display:inline-block;
+
+    padding:9px 16px;
+    border-radius:20px;
+
+    border:1px solid rgba(180,235,255,.25);
+    background:rgba(255,255,255,.06);
+
+    color:rgba(235,250,255,.85);
+    font-size:12px;
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.upload label:hover{
+    background:rgba(120,210,255,.14);
+}
+
+#songFile{
+    display:none;
+}
+
+audio{
+    width:100%;
+    height:42px;
+}
+
+/* =========================
+   LYRICS
+========================= */
+
+.lyrics{
+    width:min(700px,92vw);
+
+    height:190px;
+
+    margin-top:14px;
+
+    padding:25px 20px;
+
+    overflow-y:auto;
+    scroll-behavior:smooth;
+
+    border-radius:20px;
+
+    border:1px solid rgba(180,235,255,.12);
+
+    background:rgba(0,10,15,.42);
+
+    scrollbar-width:thin;
+}
+
+.lyrics::-webkit-scrollbar{
+    width:5px;
+}
+
+.lyrics::-webkit-scrollbar-thumb{
+    background:rgba(140,220,255,.35);
+    border-radius:10px;
+}
+
+.lyrics p{
+    margin:13px 0;
+
+    color:rgba(220,240,245,.35);
+
+    font-size:15px;
+    line-height:1.7;
+
+    transition:
+        color .35s ease,
+        transform .35s ease,
+        text-shadow .35s ease;
+}
+
+.lyrics p.active{
+    color:#ffffff;
+
+    transform:scale(1.04);
+
+    text-shadow:
+        0 0 8px #8feaff,
+        0 0 22px rgba(80,210,255,.65);
+}
+
+/* =========================
+   PLAYER CONTROLS
+========================= */
+
+.controls{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+
+    margin-top:13px;
+}
+
+.control-btn{
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(180,235,255,.22);
+
+    background:rgba(255,255,255,.07);
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.control-btn:hover{
+    background:rgba(100,210,255,.18);
+
+    box-shadow:
+        0 0 18px rgba(100,210,255,.25);
+
+    transform:scale(1.06);
+}
+
+.play-btn{
+    width:52px;
+    height:52px;
+    font-size:17px;
+}
+
+.status{
+    margin-top:8px;
+
+    min-height:18px;
+
+    color:rgba(220,245,255,.5);
+
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.next{
+    position:absolute;
+
+    left:50%;
+    bottom:28px;
+
+    transform:translateX(-50%);
+
+    padding:13px 28px;
+
+    border-radius:30px;
+
+    border:1px solid rgba(180,235,255,.3);
+
+    background:rgba(255,255,255,.07);
+
+    color:white;
+
+    font-size:14px;
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(10px);
+
+    transition:.25s;
+}
+
+.next:hover{
+    background:rgba(120,210,255,.18);
+
+    box-shadow:
+        0 0 25px rgba(100,210,255,.3);
+
+    transform:
+        translateX(-50%)
+        scale(1.05);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:600px){
+
+    .flower.one{
+        left:5%;
+    }
+
+    .flower.two{
+        right:5%;
+    }
+
+    .flower.three{
+        left:5%;
+    }
+
+    .flower.four{
+        right:5%;
+    }
+
+    .message{
+        padding:10px;
+    }
+
+    .song-page{
+        padding-top:35px;
+    }
+
+    .lyrics{
+        height:170px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="scene">
+
+    <!-- PARTICLES -->
+    <div class="particles" id="particles"></div>
+
+    <!-- FLOWERS -->
+    <div class="flowers">
+
+        <div class="flower one">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="flower-center"></div>
+        </div>
+
+        <div class="flower two">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="flower-center"></div>
+        </div>
+
+        <div class="flower three">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="flower-center"></div>
+        </div>
+
+        <div class="flower four">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="flower-center"></div>
+        </div>
+
+    </div>
+
+    <!-- WATER -->
+    <div class="water">
+        <div class="ripple"></div>
+        <div class="ripple"></div>
+        <div class="ripple"></div>
+    </div>
+
+
+    <!-- =========================
+         PAGE 1
+    ========================= -->
+
+    <section
+        class="page opening active"
+        id="page1">
+
+        <div class="small-line">
+            A little something
+        </div>
+
+        <div class="made">
+            Made by Rudra
+        </div>
+
+        <div class="by">
+            ✦ just for you ✦
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PAGE 2
+    ========================= -->
+
+    <section
+        class="page"
+        id="page2">
+
+        <div class="message">
+
+            <div class="small-line">
+                Before the song...
+            </div>
+
+            <h2>
+                Hey, you.
+            </h2>
+
+            <p>
+                I don't really know how to put some things into words...
+            </p>
+
+            <p>
+                So I made this little place instead.
+            </p>
+
+            <p>
+                I hope it gives you a small reason to smile today. ✨
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PAGE 3
+    ========================= -->
+
+    <section
+        class="page song-page"
+        id="page3">
+
+        <div class="song-intro">
+            AND NOW...
+        </div>
+
+        <h1 class="song-title">
+            Udaarian
+        </h1>
+
+        <div class="song-subtitle">
+            A song chosen especially for this little moment 🎵
+        </div>
+
+
+        <!-- PLAYER -->
+
+        <div class="player">
+
+            <div class="upload">
+
+                <label for="songFile">
+                    Choose Udaarian 🎵
+                </label>
+
+                <input
+                    type="file"
+                    id="songFile"
+                    accept="audio/*">
+
+            </div>
+
+
+            <audio
+                id="audio"
+                controls>
+            </audio>
+
+
+            <div class="controls">
+
+                <button
+                    class="control-btn"
+                    id="backBtn"
+                    type="button">
+                    ↶
+                </button>
+
+                <button
+                    class="control-btn play-btn"
+                    id="playBtn"
+                    type="button">
+                    ▶
+                </button>
+
+                <button
+                    class="control-btn"
+                    id="forwardBtn"
+                    type="button">
+                    ↷
+                </button>
+
+            </div>
+
+
+            <div
+                class="status"
+                id="status">
+                Choose the song to begin ✦
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             LYRICS
+        ========================= -->
+
+        <div
+            class="lyrics"
+            id="lyrics">
+
+            <!--
+            KEEP YOUR EXISTING UD AARIAN LYRICS HERE.
+
+            IMPORTANT:
+            Add data-time="SECONDS" to each lyric <p>
+            if you want automatic highlighting.
+
+            Example:
+
+            <p data-time="0">YOUR EXISTING LINE</p>
+            <p data-time="8">YOUR EXISTING LINE</p>
+            <p data-time="15">YOUR EXISTING LINE</p>
+
+            Do NOT change your lyrics themselves.
+            -->
+
+        </div>
+
+    </section>
+
+
+    <!-- NEXT BUTTON -->
+
+    <button
+        class="next"
+        id="nextBtn"
+        type="button">
+
+        Continue ✦
+
+    </button>
+
+</div>
+
+
+<script>
+
+/* =========================
+   PARTICLES
+========================= */
+
+const particles =
+    document.getElementById("particles");
+
+for(let i = 0; i < 100; i++){
+
+    const particle =
+        document.createElement("div");
+
+    particle.className =
+        "particle";
+
+    particle.style.left =
+        Math.random() * 100 + "%";
+
+    particle.style.animationDuration =
+        (6 + Math.random() * 12) + "s";
+
+    particle.style.animationDelay =
+        (-Math.random() * 15) + "s";
+
+    particle.style.opacity =
+        0.2 + Math.random() * 0.7;
+
+    particles.appendChild(particle);
+}
+
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+const pages = [
+    document.getElementById("page1"),
+    document.getElementById("page2"),
+    document.getElementById("page3")
+];
+
+const nextBtn =
+    document.getElementById("nextBtn");
+
+let currentPage = 0;
+
+
+function showPage(index){
+
+    if(index < 0){
+        index = 0;
+    }
+
+    if(index >= pages.length){
+        index = pages.length - 1;
+    }
+
+    currentPage = index;
+
+    pages.forEach(function(page,i){
+
+        page.classList.toggle(
+            "active",
+            i === currentPage
+        );
+
+    });
+
+
+    if(currentPage === pages.length - 1){
+
+        nextBtn.style.display = "none";
+
+    }else{
+
+        nextBtn.style.display = "block";
+
+        if(currentPage === 0){
+
+            nextBtn.textContent =
+                "Continue ✦";
+
+        }
+
+        if(currentPage === 1){
+
+            nextBtn.textContent =
+                "There's a song for you ♪";
+
+        }
+
+    }
+
+}
+
+
+nextBtn.addEventListener(
+    "click",
+    function(){
+
+        showPage(currentPage + 1);
+
+    }
+);
+
+
+/* =========================
+   AUDIO PLAYER
+========================= */
+
+const songFile =
+    document.getElementById("songFile");
+
+const audio =
+    document.getElementById("audio");
+
+const playBtn =
+    document.getElementById("playBtn");
+
+const backBtn =
+    document.getElementById("backBtn");
+
+const forwardBtn =
+    document.getElementById("forwardBtn");
+
+const status =
+    document.getElementById("status");
+
+
+songFile.addEventListener(
+    "change",
+    function(){
+
+        const file =
+            songFile.files[0];
+
+        if(!file){
+            return;
+        }
+
+        const url =
+            URL.createObjectURL(file);
+
+        audio.src = url;
+
+        audio.load();
+
+        status.textContent =
+            "Song loaded ✦ Press play.";
+
+    }
+);
+
+
+/* PLAY / PAUSE */
+
+playBtn.addEventListener(
+    "click",
+    function(){
+
+        if(!audio.src){
+
+            status.textContent =
+                "Choose the song first.";
+
+            return;
+        }
+
+
+        if(audio.paused){
+
+            audio.play();
+
+        }else{
+
+            audio.pause();
+
+        }
+
+    }
+);
+
+
+audio.addEventListener(
+    "play",
+    function(){
+
+        playBtn.textContent = "Ⅱ";
+
+    }
+);
+
+
+audio.addEventListener(
+    "pause",
+    function(){
+
+        playBtn.textContent = "▶";
+
+    }
+);
+
+
+/* BACK 10 SEC */
+
+backBtn.addEventListener(
+    "click",
+    function(){
+
+        audio.currentTime =
+            Math.max(
+                0,
+                audio.currentTime - 10
+            );
+
+    }
+);
+
+
+/* FORWARD 10 SEC */
+
+forwardBtn.addEventListener(
+    "click",
+    function(){
+
+        audio.currentTime =
+            Math.min(
+                audio.duration || Infinity,
+                audio.currentTime + 10
+            );
+
+    }
+);
+
+
+/* =========================
+   LYRICS SYNC
+========================= */
+
+const lyricsBox =
+    document.getElementById("lyrics");
+
+
+function updateLyrics(){
+
+    const lines =
+        lyricsBox.querySelectorAll(
+            "p[data-time]"
+        );
+
+    if(!lines.length){
+        return;
+    }
+
+    let activeLine = null;
+
+    lines.forEach(function(line){
+
+        const time =
+            parseFloat(
+                line.dataset.time
+            );
+
+        if(
+            !isNaN(time) &&
+            audio.currentTime >= time
+        ){
+
+            activeLine = line;
+
+        }
+
+    });
+
+
+    lines.forEach(function(line){
+
+        line.classList.remove("active");
+
+    });
+
+
+    if(activeLine){
+
+        activeLine.classList.add("active");
+
+        activeLine.scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+        });
+
+    }
+
+}
+
+
+audio.addEventListener(
+    "timeupdate",
+    updateLyrics
+);
+
+
+/* =========================
+   KEYBOARD
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.code === "Enter" ||
+            event.code === "Space"
+        ){
+
+            if(
+                document.activeElement.tagName !==
+                "BUTTON" &&
+                document.activeElement.tagName !==
+                "INPUT"
+            ){
+
+                event.preventDefault();
+
+                if(
+                    currentPage <
+                    pages.length - 1
+                ){
+
+                    showPage(
+                        currentPage + 1
+                    );
+
+                }
+
+            }
+
+        }
+
+    }
+);
+
+
+/* START */
+
+showPage(0);
+
+</script>
+
+</body>
+</html>
