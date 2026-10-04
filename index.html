@@ -485,65 +485,6 @@ audio{
     width:100%;
     height:42px;
 }
-
-/* =========================
-   LYRICS
-========================= */
-
-.lyrics{
-    width:min(700px,92vw);
-
-    height:190px;
-
-    margin-top:14px;
-
-    padding:25px 20px;
-
-    overflow-y:auto;
-    scroll-behavior:smooth;
-
-    border-radius:20px;
-
-    border:1px solid rgba(180,235,255,.12);
-
-    background:rgba(0,10,15,.42);
-
-    scrollbar-width:thin;
-}
-
-.lyrics::-webkit-scrollbar{
-    width:5px;
-}
-
-.lyrics::-webkit-scrollbar-thumb{
-    background:rgba(140,220,255,.35);
-    border-radius:10px;
-}
-
-.lyrics p{
-    margin:13px 0;
-
-    color:rgba(220,240,245,.35);
-
-    font-size:15px;
-    line-height:1.7;
-
-    transition:
-        color .35s ease,
-        transform .35s ease,
-        text-shadow .35s ease;
-}
-
-.lyrics p.active{
-    color:#ffffff;
-
-    transform:scale(1.04);
-
-    text-shadow:
-        0 0 8px #8feaff,
-        0 0 22px rgba(80,210,255,.65);
-}
-
 /* =========================
    PLAYER CONTROLS
 ========================= */
@@ -671,10 +612,6 @@ audio{
 
     .song-page{
         padding-top:35px;
-    }
-
-    .lyrics{
-        height:170px;
     }
 }
 </style>
@@ -818,24 +755,9 @@ audio{
         <!-- PLAYER -->
 
         <div class="player">
-
-            <div class="upload">
-
-                <label for="songFile">
-                    Choose Udaarian 🎵
-                </label>
-
-                <input
-                    type="file"
-                    id="songFile"
-                    accept="audio/*">
-
-            </div>
-
-
-            <audio
-                id="audio"
-                controls>
+            <audio id="audio" controls preload="metadata">
+                <source src="UDAARIAN_compressed.wav" type="audio/wav">
+                Your browser does not support audio playback.
             </audio>
 
 
@@ -868,7 +790,7 @@ audio{
             <div
                 class="status"
                 id="status">
-                Choose the song to begin ✦
+                Udaarian is ready ✦ Press play.
             </div>
 
         </div>
@@ -1029,9 +951,6 @@ nextBtn.addEventListener(
    AUDIO PLAYER
 ========================= */
 
-const songFile =
-    document.getElementById("songFile");
-
 const audio =
     document.getElementById("audio");
 
@@ -1048,32 +967,8 @@ const status =
     document.getElementById("status");
 
 
-songFile.addEventListener(
-    "change",
-    function(){
-
-        const file =
-            songFile.files[0];
-
-        if(!file){
-            return;
-        }
-
-        const url =
-            URL.createObjectURL(file);
-
-        audio.src = url;
-
-        audio.load();
-
-        status.textContent =
-            "Song loaded ✦ Press play.";
-
-    }
-);
-
-
 /* PLAY / PAUSE */
+
 
 playBtn.addEventListener(
     "click",
@@ -1152,74 +1047,6 @@ forwardBtn.addEventListener(
 
     }
 );
-
-
-/* =========================
-   LYRICS SYNC
-========================= */
-
-const lyricsBox =
-    document.getElementById("lyrics");
-
-
-function updateLyrics(){
-
-    const lines =
-        lyricsBox.querySelectorAll(
-            "p[data-time]"
-        );
-
-    if(!lines.length){
-        return;
-    }
-
-    let activeLine = null;
-
-    lines.forEach(function(line){
-
-        const time =
-            parseFloat(
-                line.dataset.time
-            );
-
-        if(
-            !isNaN(time) &&
-            audio.currentTime >= time
-        ){
-
-            activeLine = line;
-
-        }
-
-    });
-
-
-    lines.forEach(function(line){
-
-        line.classList.remove("active");
-
-    });
-
-
-    if(activeLine){
-
-        activeLine.classList.add("active");
-
-        activeLine.scrollIntoView({
-            behavior:"smooth",
-            block:"center"
-        });
-
-    }
-
-}
-
-
-audio.addEventListener(
-    "timeupdate",
-    updateLyrics
-);
-
 
 /* =========================
    KEYBOARD
